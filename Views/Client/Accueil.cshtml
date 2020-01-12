@@ -1,0 +1,167 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 class="m-0 text-dark">Clients</h1>
+                    </div><!-- /.col -->
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="/Client/Index">Accueil</a></li>
+                            <li class="breadcrumb-item active">Ajout client</li>
+                        </ol>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Liste des sociétés</h3>
+                                <div style="float:right">
+                                    @using (Html.BeginForm("Importer", "Client", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                                    {
+                                        <input type="file" name="files" />
+                                        <input type="submit" class="btn btn-primary" value="Import" />
+                                        <a href="/Client/Exporter"><button type="button" class="btn btn-primary">Export</button></a>
+                                    }
+
+                                </div>
+    </div>
+    <!-- /.card-header -->
+                            <div class="card-body">
+                                @if (ViewBag.message != "")
+                                {
+                                    <p>@ViewBag.message</p>
+                                }
+                                @if (ViewBag.download == "ok")
+                                {
+                                    <p>Export réussi veuillez télécharger votre fichier en cliquant sur ce <a href="/Content/Files/export.txt" download>lien</a></p>
+                                }
+                                <table id="example2" class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Société</th>
+                                            <th>NIF</th>
+                                            <th>STAT</th>
+                                            <th>Activités</th>
+                                            <th>Adresse</th>
+                                            <th>Mail</th>
+                                            <th>Téléphone</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <form action="~/Client/AjoutClient" method="post">
+                                            <tr>
+                                                <td><input type="text" class="form-control" name="societe" placeholder="" /></td>
+                                                <td><input type="text" class="form-control" name="nif" placeholder="" /></td>
+                                                <td><input type="text" class="form-control" name="stat" placeholder="" /></td>
+                                                <td><input type="text" class="form-control" name="activite" placeholder="" /></td>
+                                                <td><input type="text" class="form-control" name="adresse" placeholder="" /></td>
+                                                <td><input type="text" class="form-control" name="mail" placeholder="" /></td>
+                                                <td><input type="text" class="form-control" name="telephone" placeholder="" /></td>
+                                                <td><input type="submit" class="btn btn-primary" value="Ajouter" /></td>
+                                            </tr>
+                                        </form>
+                                        @foreach (SAIM.Models.Classe.Client client in ViewData["liste"] as List<SAIM.Models.Classe.Client>)
+                                        {
+                                            <tr>
+                                                <td>@client.NomSociete</td>
+                                                <td>@client.Nif</td>
+                                                <td>@client.Stat</td>
+                                                <td>@client.Activite</td>
+                                                <td>@client.Adresse</td>
+                                                <td>@client.Mail</td>
+                                                <td>@client.Telephone</td>
+                                                <td>
+                                                    <button type="button" data-toggle="modal" data-target="#exampleModalLong" onclick="modify('@client.IdSociete','@client.NomSociete','@client.Nif','@client.Stat','@client.Activite','@client.Adresse','@client.Mail','@client.Telephone')">
+                                                        <i class="fa fa-edit"></i>
+                                                    </button>
+                                                    <a href="~/Client/Supprimer?id=@client.IdSociete">
+                                                        <button type="button" data-toggle="modal"><i class="fa fa-trash"></i></button>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        }
+
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                        <!-- /.card -->
+                    </div><!-- /.container-fluid -->
+        </section>
+        <!-- /.content -->
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Modification</h5>
+                    </div>
+                    <form action="/Client/Modifier" method="POST">
+                        <div class="modal-body">
+                            <input id="idSociete" type="hidden" name="idSociete">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Société</label>
+                                <input id="societe" type="text" class="form-control" name="societe">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">NIF</label>
+                                <input id="nif" type="text" class="form-control" name="nif">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">STAT</label>
+                                <input id="stat" type="text" class="form-control" name="stat">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Activités</label>
+                                <input id="activite" type="text" class="form-control" name="activite">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Adresse</label>
+                                <input id="adresse" type="text" class="form-control" name="adresse">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Mail</label>
+                                <input id="mail" type="text" class="form-control" name="mail">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Téléphone</label>
+                                <input id="telephone" type="text" class="form-control" name="telephone">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                            <button type="submit" class="btn btn-primary">Enregistrer</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+<script type="text/javascript">
+    function modify($idSociete, $nomSociete, $nif, $stat, $activite, $adresse, $mail, $telephone) {
+        document.getElementById('idSociete').value = $idSociete;
+        document.getElementById('societe').value = $nomSociete;
+        document.getElementById('nif').value = $nif;
+        document.getElementById('stat').value = $stat;
+        document.getElementById('activite').value = $activite;
+        document.getElementById('adresse').value = $adresse;
+        document.getElementById('mail').value = $mail;
+        document.getElementById('telephone').value = $telephone;
+    }
+</script>

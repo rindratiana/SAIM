@@ -1,0 +1,5 @@
+nom:WAKo;nif:10365890821;stat:19405839706;activite:Services des officines;adresse:Antaninarenina est;mail:waka@gmail.como;telephone:03426508475
+nom:BFV;nif:10365890820;stat:19405839706;activite:Banque;adresse:Antaninarenina;mail:bfv@gmail.com;telephone:03426508470
+nom:BOA;nif:10365890820;stat:19405839705;activite:Banque 2;adresse:Andoran;mail:boa@gmail.com;telephone:0342650847
+nom:BOA;nif:10365890820;stat:19405839706;activite:Banque 2;adresse:Antanimena;mail:boa@gmail.com;telephone:0342650847
+nom:Bindev;nif:10365890821;stat:19405839706;activite:freelance;adresse:Ville;mail:bin@gmail.com;telephone:03426508475
